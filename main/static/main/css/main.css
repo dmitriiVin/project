@@ -1,0 +1,18 @@
+html {
+    background: linear-gradient(to bottom right, #e0f2ff, #f7faff);
+    background-attachment: fixed;
+}
+
+body {
+    text-align: center;
+}
+
+main {
+    background: #FFF9F0;
+    border: 5px solid #EEE5D1;
+    border-radius: 10px;
+    box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.3);
+    width: 55vw;
+    min-height: 100vh;
+    display: inline-block;
+}
