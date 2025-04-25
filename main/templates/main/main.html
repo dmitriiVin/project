@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="ru">
   <head>
@@ -6,11 +7,122 @@
     <link rel="stylesheet" href="myproject/bootstrap-5.3.3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <title>Главная страница</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Расписание занятости компьютерных классов на IT-этаже || МАИ</title>
   </head>
   <body>
+    {% if data.account_mod == 1 %}
+      <div id="open-menu">
+        <i class="fa-solid fa-circle-user"></i>
+      </div>
+      <div id="menu">
+        <div id="header-menu">
+          <h2 id="h2-menu">Аккаунт преподавателя</h2>
+          <img src="{% static 'main/img/МАИ_лого.svg.png' %}" alt="МАИ">
+        </div>
+        <div id="mainblock-menu">
+          <p>Имя: {{ data.account.name }}</p>
+          <p>Фамилия: {{ data.account.surname }}</p>
+          <p>Отчество: {{ data.account.lastname }}</p>
+          <p>Кафедра: {{ data.account.department }}</p>
+          <p>Пароль: {{ data.account.password }}</p>
+          <button type="submit">
+            <a href="#change-password">Изменить пароль</a>
+          </button>
+          <form action="{% url 'main_page' %}" method="GET">
+            <input type="hidden" name="quit" value="1">
+            <button type="submit">Выйти</button>
+          </form>
+        </div>
+      </div>
+      <div id="change-password">
+        <form action="{% url 'main_page' %}" method="POST">
+          {% csrf_token %}
+          <input name="new_password" type="password" placeholder="Введите новый пароль"><br><br>
+          <input name="again_new_password" type="password" placeholder="Повторите новый пароль"><br>
+          {% if error == 1 %}
+            <p class="error">Пароли не совпадают!</p>
+          {% elif error == 2 %}
+            <p class="error">Пароль не может быть пустым!</p>
+          {% endif %}
+          <button type="submit">Подтвердить</button>
+        </form>
+        <button class="close-btn">
+          <a href="">Х</a>
+        </button>
+      </div>
+    {% endif %}
+    
     <main>
+      <div id="Timetable-header">
+        <h1>Расписание</h1>
+        <div class="week-marker">
+          <button><-</button>
+          <p>  {{ audience_list.0.IT1.Date }}  </p>
+          <button>-></button>
+        </div>
+      </div>
       
+      <div id="Timetable">
+        {% for name in aditional_info.AudienceName %}
+          <div class="box">
+            <h2>{{ name|pretty_view }}</h2>
+            <p class="audience-info">Количество мест: {{ aditional_info.SeatsQuantity|get_item_from_dict:name }}</p>
+            
+            {% for el in audience_list %}
+              {% with IT=el|get_attr:name %}
+                
+                <div class="Timetable-item {{ IT.GroupIn900_1030|free_or_booked }}">
+                  {% if IT.GroupIn900_1030 %}
+                    <p>{{ IT.GroupIn900_1030 }}</p>
+                  {% else %}
+                    <p>Свободно</p>
+                  {% endif %}
+                  <p>9:00-10:30</p>
+                </div>
+                
+                <div class="Timetable-item {{ IT.GroupIn1045_1215|free_or_booked }}">
+                  {% if IT.GroupIn1045_1215 %}
+                    <p>{{ IT.GroupIn1045_1215 }}</p>
+                  {% else %}
+                    <p>Свободно</p>
+                  {% endif %}
+                  <p>10:45-12:15</p>
+                </div>
+                
+                <div class="Timetable-item {{ IT.GroupIn1300_1430|free_or_booked }}">
+                  {% if IT.GroupIn1300_1430 %}
+                    <p>{{ IT.GroupIn1300_1430 }}</p>
+                  {% else %}
+                    <p>Свободно</p>
+                  {% endif %}
+                  <p>13:00-14:30</p>
+                </div>
+                
+                <div class="Timetable-item {{ IT.GroupIn1445_1615|free_or_booked }}">
+                  {% if IT.GroupIn1445_1615 %}
+                    <p>{{ IT.GroupIn1445_1615 }}</p>
+                  {% else %}
+                    <p>Свободно</p>
+                  {% endif %}
+                  <p>14:45-16:15</p>
+                </div>
+                
+                <div class="Timetable-item {{ IT.GroupIn1630_1800|free_or_booked }}">
+                  {% if IT.GroupIn1630_1800 %}
+                    <p>{{ IT.GroupIn1630_1800 }}</p>
+                  {% else %}
+                    <p>Свободно</p>
+                  {% endif %}
+                  <p>16:30-18:00</p>
+                </div>
+                
+              {% endwith %}
+            {% endfor %}
+            
+          </div>
+        {% endfor %}
+      </div>
     </main>
   </body>
 </html>

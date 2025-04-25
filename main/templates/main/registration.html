@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="{% static 'main/css/registration.css' %}">
+  </head>
+  <body>
+    <div class="auth-box">
+      <h2>Авторизация</h2>
+      <form action="{% url 'register_page' %}" method="POST">
+        {% csrf_token %}
+        
+        <div class="form-group">
+          <input name="name" type="text" placeholder="Имя">
+        </div><br>
+
+        <div class="form-group">
+          <input name="surname" type="text" placeholder="Фамилия">
+        </div><br>
+
+        <div class="form-group">
+          <input name="lastname" type="text" placeholder="Отчество">
+        </div><br>
+
+        <div class="form-group">
+          <input name="department" type="text" placeholder="Кафедра">
+        </div><br>
+
+        <div class="form-group">
+          <input name="password" type="password" placeholder="Пароль">
+        </div><br>
+
+        {% if error == 0 %}
+          <p class="error">Аккаунт не найден!</p>
+        {% elif error == 1 %}
+          <p class="error">Пароль введён неверно!</p>
+        {% endif %}
+
+        <button class="btn primary" type="submit">Авторизоваться</button>
+      </form>
+      <button class="btn secondary" type="submit" onclick="window.location.href='{% url 'home_page' %}'">Вернуться</button>
+    </div>
+  </body>
+</html>

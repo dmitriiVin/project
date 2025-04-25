@@ -2,10 +2,10 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Регистрация</title>
-    <link rel="stylesheet" href="{% static 'main/css/home.css' %}" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добро пожаловать!</title>
+    <link rel="stylesheet" href="{% static 'main/css/home.css' %}">
   </head>
   <body>
     <div class="wrapper">
@@ -18,39 +18,9 @@
         <h2>Авторизация</h2>
         <form action="{% url 'home_page' %}" method="POST">
           {% csrf_token %}
-          <div class="form-group">
-            <label for="name_input">Имя</label>
-            <input id="name_input" name="name" type="text" placeholder="Имя" required />
-          </div>
-
-          <div class="form-group">
-            <label for="surname_input">Фамилия</label>
-            <input id="surname_input" name="surname" type="text" placeholder="Фамилия" required />
-          </div>
-
-          <div class="form-group">
-            <label for="lastname_input">Отчество</label>
-            <input id="lastname_input" name="lastname" type="text" placeholder="Отчество" required />
-          </div>
-
-          <div class="form-group">
-            <label for="group_input">Группа</label>
-            <input id="group_input" name="group" type="text" placeholder="Группа" required />
-          </div>
-
-          <div class="form-group">
-            <label for="password_input">Пароль</label>
-            <input id="password_input" name="password" type="password" placeholder="Пароль" required />
-          </div>
-
-          {% if error == 0 %}
-            <p class="error">Аккаунт не найден!</p>
-          {% elif error == 1 %}
-            <p class="error">Пароль введён неверно!</p>
-          {% endif %}
-
-          <button class="btn primary" type="submit" name="mod" value="0">Авторизоваться</button>
-          <button class="btn secondary" type="button" onclick="window.location.href='main.html'" > Войти без авторизации </button>
+          
+          <button class="btn primary" type="submit" name="mod" value="0">Я преподаватель</button>
+          <button class="btn secondary" type="submit" name="mod" value="1">Я студент</button>
         </form>
       </div>
     </div>

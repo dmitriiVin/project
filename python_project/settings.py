@@ -115,3 +115,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'main/static'),
 ]
+
+SESSION_COOKIE_AGE = 7200  # 2 часа в секундах
+SESSION_SAVE_EVERY_REQUEST = True  # Обновлять срок жизни при каждом запросе
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Сессия сохраняется после закрытия браузера
