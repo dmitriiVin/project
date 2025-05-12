@@ -24,3 +24,23 @@ def free_or_booked(timetable_item):
     if timetable_item:
         return "booked"
     return "free"
+
+@register.filter()
+def increment(num):
+    return num + 1
+
+@register.filter()
+def decrement(num):
+    return num - 1
+
+@register.filter()
+def get_date_from_current_date(audience_list, CurrentDateIndex):
+    return audience_list[CurrentDateIndex].IT1.Date
+
+@register.filter()
+def get_element_from_list(arr, index):
+    return arr[index]
+
+@register.filter()
+def date_converter(date):
+    return str(date).split()[3]

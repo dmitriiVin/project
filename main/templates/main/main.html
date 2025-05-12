@@ -4,9 +4,8 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="myproject/bootstrap-5.3.3-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title>Расписание занятости компьютерных классов на IT-этаже || МАИ</title>
   </head>
@@ -21,11 +20,10 @@
           <img src="{% static 'main/img/МАИ_лого.svg.png' %}" alt="МАИ">
         </div>
         <div id="mainblock-menu">
-          <p>Имя: {{ data.account.name }}</p>
           <p>Фамилия: {{ data.account.surname }}</p>
+          <p>Имя: {{ data.account.name }}</p>
           <p>Отчество: {{ data.account.lastname }}</p>
           <p>Кафедра: {{ data.account.department }}</p>
-          <p>Пароль: {{ data.account.password }}</p>
           <button type="submit">
             <a href="#change-password">Изменить пароль</a>
           </button>
@@ -38,7 +36,8 @@
       <div id="change-password">
         <form action="{% url 'main_page' %}" method="POST">
           {% csrf_token %}
-          <input name="new_password" type="password" placeholder="Введите новый пароль"><br><br>
+          <input type="hidden" name="current_date_for_edit" value="{{ aditional_info.CurrentDateIndex }}">
+          <input name="new_password" type="password" placeholder="Введите новый пароль"><br>
           <input name="again_new_password" type="password" placeholder="Повторите новый пароль"><br>
           {% if error == 1 %}
             <p class="error">Пароли не совпадают!</p>
@@ -53,76 +52,101 @@
       </div>
     {% endif %}
     
-    <main>
-      <div id="Timetable-header">
-        <h1>Расписание</h1>
-        <div class="week-marker">
-          <button><-</button>
-          <p>  {{ audience_list.0.IT1.Date }}  </p>
-          <button>-></button>
-        </div>
+    <a href="{% url 'home_page' %}" id="go-to-welcome-page">
+      <div>
+        <i class="fa-solid fa-arrow-left"></i>
       </div>
-      
-      <div id="Timetable">
-        {% for name in aditional_info.AudienceName %}
-          <div class="box">
-            <h2>{{ name|pretty_view }}</h2>
-            <p class="audience-info">Количество мест: {{ aditional_info.SeatsQuantity|get_item_from_dict:name }}</p>
+    </a>
+    
+    <main>
+      {% with current_date=aditional_info.CurrentDateIndex %}
+    
+        <div id="Timetable-header">
+          <h1>Расписание</h1>
+          <div class="week-marker">
             
-            {% for el in audience_list %}
-              {% with IT=el|get_attr:name %}
-                
-                <div class="Timetable-item {{ IT.GroupIn900_1030|free_or_booked }}">
-                  {% if IT.GroupIn900_1030 %}
-                    <p>{{ IT.GroupIn900_1030 }}</p>
-                  {% else %}
-                    <p>Свободно</p>
-                  {% endif %}
-                  <p>9:00-10:30</p>
-                </div>
-                
-                <div class="Timetable-item {{ IT.GroupIn1045_1215|free_or_booked }}">
-                  {% if IT.GroupIn1045_1215 %}
-                    <p>{{ IT.GroupIn1045_1215 }}</p>
-                  {% else %}
-                    <p>Свободно</p>
-                  {% endif %}
-                  <p>10:45-12:15</p>
-                </div>
-                
-                <div class="Timetable-item {{ IT.GroupIn1300_1430|free_or_booked }}">
-                  {% if IT.GroupIn1300_1430 %}
-                    <p>{{ IT.GroupIn1300_1430 }}</p>
-                  {% else %}
-                    <p>Свободно</p>
-                  {% endif %}
-                  <p>13:00-14:30</p>
-                </div>
-                
-                <div class="Timetable-item {{ IT.GroupIn1445_1615|free_or_booked }}">
-                  {% if IT.GroupIn1445_1615 %}
-                    <p>{{ IT.GroupIn1445_1615 }}</p>
-                  {% else %}
-                    <p>Свободно</p>
-                  {% endif %}
-                  <p>14:45-16:15</p>
-                </div>
-                
-                <div class="Timetable-item {{ IT.GroupIn1630_1800|free_or_booked }}">
-                  {% if IT.GroupIn1630_1800 %}
-                    <p>{{ IT.GroupIn1630_1800 }}</p>
-                  {% else %}
-                    <p>Свободно</p>
-                  {% endif %}
-                  <p>16:30-18:00</p>
-                </div>
-                
+            {% if aditional_info.CurrentDateIndex != 0 %}
+              {% with previous_date=current_date|decrement %}
+                <form action="{% url 'main_page' %}" method="GET">
+                  <input type="hidden" name="current_date_index_from_form" value="{{ previous_date }}">
+                  <button>«</button>
+                </form>
               {% endwith %}
-            {% endfor %}
+            {% endif %}
+            
+            {% with Timetable_on_current_date=audience_list|get_date_from_current_date:aditional_info.CurrentDateIndex %}
+              <p>  {{ Timetable_on_current_date }}  </p>
+            {% endwith %}
+            
+            {% if aditional_info.CurrentDateIndex != 13 %}
+              {% with next_date=current_date|increment %}
+                <form action="{% url 'main_page' %}" method="GET">
+                  <input type="hidden" name="current_date_index_from_form" value="{{ next_date }}">
+                  <button>»</button>
+                </form>
+              {% endwith %}
+            {% endif %}
             
           </div>
-        {% endfor %}
-      </div>
+        </div>
+        
+        <div id="Timetable">
+          {% for name in aditional_info.AudienceName %}
+            <div class="box {% if data.account_mod == 1 %}allow-edit{% endif %}">
+              <h2>{{ name|pretty_view }}</h2>
+              <p class="audience-info">Количество мест: {{ aditional_info.SeatsQuantity|get_item_from_dict:name }}</p>
+              
+              {% with el=audience_list|get_element_from_list:current_date %}
+                {% with IT=el|get_attr:name %}
+                
+                  {% for i in aditional_info.AllLessonTimings %}
+                    {% with group=IT|get_attr:i.0 %}
+                    
+                      <form action="{% url 'main_page' %}" method="POST" class="edit-group-info">
+                        {% csrf_token %}
+                        <input type="hidden" name="current_date_for_edit" value="{{ current_date }}">
+                        
+                        <div class="Timetable-item {{ group|free_or_booked }}" tabindex="0">
+                          {% if group %}
+                            <p>{{ group }}</p>
+                          {% else %}
+                            <p>Свободно</p>
+                          {% endif %}
+                          <p>{{ i.1 }}</p>
+                        </div>
+                        {% if data.account_mod == 1 %}
+                          <div class="edit-window-for-teacher" tabindex="0">
+                            <p>{{invalid_group_name}}</p>
+                            <h4>{{ name }}</h4>
+                            <div id="input-data">
+                              <input type="text" name="group_for_add" placeholder="Введите номер группы" required>
+                              <button type="submit">✓</button>
+                              <input type="hidden" name="IT_date_time" value="{{name}}|{{el|date_converter}}|{{i.1}}" >
+                            </div>
+                            <div id="date-time-div">
+                              <h5>{{ audience_list|get_date_from_current_date:aditional_info.CurrentDateIndex }}</h5>
+                              <h6>{{ i.1 }}</h6>
+                            </div>
+                          </div>
+                        {% endif %}
+                        
+                        {% if data.account_mod == 1 %}
+                          <div id="dark-background"></div>
+                        {% endif %}
+                        
+                      </form>
+                    
+                    {% endwith %}
+                  {% endfor %}
+                  
+                {% endwith %}
+              {% endwith %}
+              
+            </div>
+          {% endfor %}
+        </div>
+        
+      {% endwith %}
     </main>
   </body>
 </html>

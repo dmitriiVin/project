@@ -76,15 +76,25 @@ class Audiences(models.Model):
     IT3 = models.ForeignKey(IT3_db, on_delete=models.CASCADE, null=True, blank=True)
     
     def __str__(self):
-        return str(self.id)
+        return f"Расписание на дату: {self.IT1.Date}"
     
     def clean(self):
-        date = ""
-        for i in [self.IT1.Date, self.IT2.Date, self.IT3.Date]:
+        dates = []
+        for i in [self.IT1, self.IT2, self.IT3]:
             if i:
-                if (str(i) != date) and (date != ""):
-                    raise ValidationError(f"Вы можете добавлять в этот класс только расписание на определенную дату: {date}")
-                date = str(i)
+                dates.append(i.Date)
+        
+        if not(dates):
+            raise ValidationError(f"Вы не можете добавлять пустой класс")
+        
+        first = ""
+        for i in dates:
+            if i:
+                if not first:
+                    first = i
+                else:
+                    if first != i:
+                        raise ValidationError(f"Вы можете добавлять в этот класс только расписание на определенную дату: {first}")
     
     class Meta():
         verbose_name = "Занятость IT класса по датам"
