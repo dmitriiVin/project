@@ -1,32 +1,46 @@
 html {
-    background: linear-gradient(to bottom right, #e0f2ff, #f7faff);
+    background: linear-gradient(180deg, #d8f1ff, #b5e3ff);
     background-attachment: fixed;
 }
 
 body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', "Segoe UI", sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
     text-align: center;
+    position: relative;
 }
 
 main {
-    background: #FFF9F0;
-    border: 5px solid #EEE5D1;
-    border-radius: 10px;
-    box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.3);
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     width: 55vw;
     min-height: 100vh;
     height: max-content;
     display: inline-block;
-    padding: 10px;
+    padding: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
 
 #open-menu i {
     font-size: 40px;
+    color: #173a64;
+    transition: color 0.3s ease;
+}
+
+#open-menu i:hover {
+    color: #4aa7f3;
 }
 
 #open-menu {
     position: fixed;
-    right: 5px;
-    top: 5px;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
 }
 
 #open-menu:hover + #menu, #menu:hover {
@@ -43,19 +57,21 @@ main {
     display: flex;
     flex-direction: column;
     opacity: 0;
-    right: 5px;
-    top: 5px;
+    right: 15px;
+    top: 15px;
     visibility: hidden;
     position: fixed;
-    background: #798d9b;
+    background: white;
     width: 300px;
-    border-radius: 10px;
-    border: 3px solid #afb6bd;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     transform: translateX(-20px);
     transition:
         transform 0.5s ease-in-out 0.2s,
         opacity 0.5s,
         visibility 0s, 0.5s;
+    z-index: 100;
 }
 
 #menu img {
@@ -70,44 +86,78 @@ main {
     height: min-content;
     text-align: left;
     margin-top: 0;
+    color: #173a64;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 #header-menu {
     height: 25%;
-    width: calc(100% - 10px);
+    width: calc(100% - 20px);
     display: flex;
     flex-direction: row;
-    border-bottom: 3px solid #afb6bd;
-    padding: 5px;
+    border-bottom: 1px solid #e2f3ff;
+    padding: 10px;
+    align-items: center;
 }
 
 #mainblock-menu {
-    padding: 10px;
+    padding: 20px;
     text-align: left;
     flex-grow: 1;
     box-sizing: border-box;
     min-height: 0;
-    gap: 2px;
+    gap: 10px;
 }
 
 #mainblock-menu p {
-    margin: 4px 0;
+    margin: 10px 0;
+    color: #2c3e50;
+    font-size: 15px;
+}
+
+#mainblock-menu button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin-top: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    border: none;
+    background-color: #6ebdff;
+    color: white;
+}
+
+#mainblock-menu button:hover {
+    background-color: #4aa7f3;
+}
+
+#mainblock-menu form button {
+    background-color: #f2f9ff;
+    color: #173a64;
+    border: 1.5px solid #d2eaff;
+}
+
+#mainblock-menu form button:hover {
+    background-color: #e2f3ff;
 }
 
 #change-password {
-    background: #798d9b;
-    border-radius: 10px;
-    border: 3px solid #afb6bd;
+    background: white;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     visibility: hidden;
     display: flex;
     flex-direction: column;
-    gap: 3px;
-    right: 5px;
-    bottom: 5px;
+    gap: 15px;
+    right: 20px;
+    bottom: 20px;
     position: fixed;
     opacity: 0;
-    padding: 5px 20px 5px 20px;
-    z-index: 10;
+    padding: 20px;
+    z-index: 110;
     transform: translateY(200px);
     transition:
         transform 0.5s ease-in-out 0.2s,
@@ -120,63 +170,112 @@ main {
     opacity: 1;
     transform: translateY(0px);
     transition:
-        transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
         opacity 0.5s,
         visibility 0s;
 }
 
-.mainblock-menu button {
-    padding: 0;
+#change-password input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #cfe4f5;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: 0.3s ease;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+#change-password input:focus {
+    outline: none;
+    border-color: #6ebdff;
+    box-shadow: 0 0 0 2px rgba(110, 189, 255, 0.3);
+}
+
+#change-password button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin-top: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    border: none;
+    background-color: #6ebdff;
+    color: white;
+}
+
+#change-password button:hover {
+    background-color: #4aa7f3;
 }
 
 a {
     text-decoration: none;
-    color: black;
+    color: inherit;
+}
+
+.error {
+    color: #C62828;
+    font-size: 14px;
+    margin: 5px 0;
 }
 
 .close-btn {
-    margin-top: 10px;
+    margin-top: 5px;
     padding: 8px 15px;
-    background: #5a6f7d;
-    border: none;
-    border-radius: 4px;
+    background: #f2f9ff;
+    border: 1.5px solid #d2eaff;
+    border-radius: 10px;
     cursor: pointer;
     transition: background 0.2s;
 }
 
 .close-btn:hover {
-    background: #4a5d6a;
+    background: #e2f3ff;
 }
 
 .close-btn a {
-    color: white;
+    color: #173a64;
     display: block;
 }
 
 #Timetable {
-    width: 50vw;
-    height: 100vh;
-    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    margin: 20px auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 0.5fr;
+    gap: 20px;
 }
 
 .box {
-    background: #eee5d1;
+    background: white;
     margin: 8px;
-    padding: 8px;
-    border-radius: 35px;
-    border: 3px solid #d2ccbd;
+    padding: 16px;
+    border-radius: 20px;
+    border: 1.5px solid #d2eaff;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: 1fr;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    gap: 10px;
+}
+
+.box h2 {
+    grid-column: 1 / 3;
+    color: #173a64;
+    font-size: 22px;
+    margin: 0 0 5px 0;
 }
 
 .Timetable-item {
     border-radius: 15px;
-    margin: 1px;
+    margin: 3px;
+    padding: 12px 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-size: 15px;
 }
 
 #Timetable > *:nth-child(odd):last-child {
@@ -187,29 +286,29 @@ a {
 }
 
 .free {
-    background-color: rgba(76, 175, 80, 0.2);
+    background-color: rgba(76, 175, 80, 0.1);
     color: #2E7D32;
-    border: 1px solid #4CAF50;
+    border: 1.5px solid #4CAF50;
     transform: scale(1);
     transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .free:hover {
-    background-color: rgba(76, 175, 80, 0.3);
-    transform: scale(0.97);
+    background-color: rgba(76, 175, 80, 0.2);
+    transform: scale(0.98);
 }
 
 .booked {
-    background-color: rgba(244, 67, 54, 0.2);
+    background-color: rgba(244, 67, 54, 0.1);
     color: #C62828;
-    border: 1px solid #F44336;
+    border: 1.5px solid #F44336;
     transform: scale(1);
     transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .booked:hover {
-    background-color: rgba(244, 67, 54, 0.3);
-    transform: scale(0.97);
+    background-color: rgba(244, 67, 54, 0.2);
+    transform: scale(0.98);
 }
 
 .week-marker {
@@ -220,24 +319,46 @@ a {
     white-space: pre;
     text-align: center;
     align-items: center;
-    font-size: 25px;
+    font-size: 20px;
+    color: #2c3e50;
 }
 
 .week-marker button {
-    width: fit-content;
-    height: fit-content;
-    font-size: 17px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    background-color: #6ebdff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 0 15px;
+    transition: background-color 0.3s ease;
+}
+
+.week-marker button:hover {
+    background-color: #4aa7f3;
+}
+
+#Timetable-header {
+    margin-bottom: 30px;
 }
 
 h1 {
-    font-size: 40px;
-    margin: 30px auto 0px auto;
+    font-size: 36px;
+    margin: 20px auto 30px auto;
+    color: #173a64;
+    font-weight: 600;
 }
 
 .audience-info {
     display: flex;
     align-items: center;
     justify-content: center;
+    grid-column: 1 / 3;
+    color: #2c3e50;
+    font-size: 15px;
+    margin: 0 0 10px 0;
 }
 
 .week-marker form {
@@ -246,29 +367,35 @@ h1 {
 
 #go-to-welcome-page div {
     position: fixed;
-    left: 5px;
-    top: 5px;
-    padding: 3px;
-    border-radius: 50px;
-    border: 3px solid black;
-    width: 29px;
-    height: 29px;
+    left: 15px;
+    top: 15px;
+    padding: 10px;
+    border-radius: 50%;
+    border: none;
+    width: 40px;
+    height: 40px;
     transform: scale(1);
     transition: transform 0.25s ease-in-out;
+    background-color: #6ebdff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 #go-to-welcome-page div:hover {
     transform: scale(0.95);
-    transition: transform 0.125s ease-in-out;
+    background-color: #4aa7f3;
+    transition: transform 0.125s ease-in-out, background-color 0.3s ease;
 }
 
 #go-to-welcome-page div i {
-    font-size: 29px;
+    font-size: 20px;
+    color: white;
 }
 
 #go-to-welcome-page {
     display: block;
-    background: red;
     width: 100%;
     height: 100%;
 }
@@ -276,33 +403,41 @@ h1 {
 .edit-window-for-teacher {
     opacity: 0;
     position: fixed;
-    z-index: 30;
+    z-index: 130;
     pointer-events: none;
     transform: translateX(160vw);
-    transition: transform 0s ease;
-    transition: opacity 0.2s ease;
-    /* дефолтное положение за границами экрана */
+    transition: transform 0s ease, opacity 0.2s ease;
     right: 200vw;
-    /* выравнивание блока по вертикали (чуть выше центра) */
-    top: 15vw;
-    height: 6vw;
-    /* оформление внешнего вида блока */
-    background: #d8d0b9;
-    border: 2px solid #c5bdab;
-    width: 20vw;
-    font-size: 20px;
+    top: 50%;
+    margin-top: -80px;
+    height: auto;
+    background: white;
+    border: none;
+    border-radius: 20px;
+    width: 350px;
+    font-size: 16px;
     display: flex;
-    padding: 5px;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.edit-window-for-teacher p {
+    color: #C62828;
+    margin: 0 0 10px 0;
+    font-size: 14px;
 }
 
 .Timetable-item:focus + .edit-window-for-teacher, .edit-window-for-teacher:focus-within {
     opacity: 1;
     pointer-events: auto;
+    transform: translateX(0);
+    right: calc(50% - 175px);
 }
 
 #dark-background {
-    z-index: 20;
-    background: rgba(0, 0, 0, 0.6);
+    z-index: 120;
+    background: rgba(0, 0, 0, 0.5);
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -310,7 +445,7 @@ h1 {
     right: 0;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.3s ease;
 }
 
 .Timetable-item:focus ~ #dark-background, .edit-window-for-teacher:focus-within ~ #dark-background {
@@ -319,30 +454,98 @@ h1 {
 }
 
 .edit-window-for-teacher h4 {
-    width: fit-content;
-    height: fit-content;
-    margin: 0;
+    width: 100%;
+    margin: 0 0 15px 0;
+    color: #173a64;
+    font-size: 20px;
+    text-align: center;
 }
 
 #date-time-div > * {
     margin: 3px;
 }
 
-#date-time-div, #date-time-div > * {
-    width: fit-content;
-    height: fit-content;
-    margin-top: 0;
-    margin-left: auto;
+#date-time-div {
+    width: 100%;
+    margin: 15px 0 0 0;
+    text-align: center;
+}
+
+#date-time-div h5, #date-time-div h6 {
+    width: 100%;
+    margin: 5px 0;
+    color: #2c3e50;
+    font-weight: 500;
 }
 
 .edit-window-for-teacher #input-data {
-    height: fit-content;
-    width: fit-content;
-    position: absolute;
-    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
 }
 
 #input-data input {
-    height: 17px;
-    width: fit-content;
+    width: 70%;
+    padding: 10px 12px;
+    border: 1.5px solid #cfe4f5;
+    border-radius: 10px 0 0 10px;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+#input-data input:focus {
+    outline: none;
+    border-color: #6ebdff;
+    box-shadow: 0 0 0 2px rgba(110, 189, 255, 0.3);
+}
+
+#input-data button {
+    background-color: #6ebdff;
+    color: white;
+    border: none;
+    border-radius: 0 10px 10px 0;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#input-data button:hover {
+    background-color: #4aa7f3;
+}
+
+@media (max-width: 1200px) {
+    main {
+        width: 80vw;
+    }
+    
+    #Timetable {
+        grid-template-columns: 1fr;
+    }
+    
+    #Timetable > *:nth-child(odd):last-child {
+        grid-column: 1;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        width: 95vw;
+        padding: 10px;
+    }
+    
+    .box {
+        padding: 10px;
+    }
+    
+    .edit-window-for-teacher {
+        width: 90%;
+        right: 5%;
+    }
+    
+    .Timetable-item:focus + .edit-window-for-teacher, .edit-window-for-teacher:focus-within {
+        right: 5%;
+    }
 }
