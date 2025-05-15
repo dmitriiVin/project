@@ -2,7 +2,7 @@
 
 *Учебный pet-project, который спасает студентов и преподавателей
 от хаоса с аудиториями. Разрабатывается в рамках дисциплины
-«Проектная деятельность», но уже вырос в полноценное MVP.*
+«Программирование на языке Python».*
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white"/>
