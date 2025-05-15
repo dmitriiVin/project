@@ -1,6 +1,1 @@
 .idea
-credentials/token.json
-credentials/credentials.json
-.venv
-.env
-credentials/
