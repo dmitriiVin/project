@@ -39,12 +39,12 @@
 
 | Уровень | Технологии |
 |---------|------------|
-| **Backend** | Python 3.11, Django 4.x, Django REST Framework |
-| **Frontend** | HTML5, CSS3 (SCSS), Vanilla JS + Alpine.js |
+| **Backend** | Python 3.13, Django 4.x, Django REST Framework |
+| **Frontend** | HTML5, CSS3 (SCSS) |
 | **База данных** | SQLite (dev) → PostgreSQL (prod) |
-| **DevOps** | Docker / Docker-compose, Nginx proxy, GitHub Actions (pytest + flake8) |
-| **Интеграции** | Google Calendar API |
-| **Тестирование** | PyTest, Coverage, Lighthouse CI |
+| **DevOps** | GitHub Actions (pytest + flake8) |
+| **Интеграции** | Google Spreadsheet |
+| **Тестирование** | PyTest |
 
 ---
 
