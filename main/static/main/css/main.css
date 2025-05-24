@@ -1,6 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+.mai-text-logo {
+    font-family: 'Segoe UI Semibold', sans-serif;
+    color: #0095DA;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mai-text-logo.large {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.mai-text-logo.small {
+    font-size: 21px;
+    font-weight: 700;
+    margin-top: 4px;
+}
+
 html {
     background: linear-gradient(180deg, #d8f1ff, #b5e3ff);
     background-attachment: fixed;
+    height: 100%;
 }
 
 body {
@@ -11,9 +32,51 @@ body {
     overflow-x: hidden;
     text-align: center;
     position: relative;
+    color: #2c3e50;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.mai-logo {
+    height: 50px;
+    width: auto;
+    margin-right: 15px;
+}
+
+.header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
 }
 
 main {
+    animation: fadeIn 0.6s ease-out;
     background: white;
     border-radius: 20px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
@@ -21,15 +84,17 @@ main {
     min-height: 100vh;
     height: max-content;
     display: inline-block;
-    padding: 20px;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    padding: 30px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    transition: all 0.3s ease;
 }
 
 #open-menu i {
     font-size: 40px;
     color: #173a64;
     transition: color 0.3s ease;
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.1));
 }
 
 #open-menu i:hover {
@@ -86,7 +151,7 @@ main {
     height: min-content;
     text-align: left;
     margin-top: 0;
-    color: #173a64;
+    color: #0095DA;
     font-size: 20px;
     font-weight: 600;
 }
@@ -235,7 +300,7 @@ a {
 }
 
 .close-btn a {
-    color: #173a64;
+    color: #0095DA;
     display: block;
 }
 
@@ -250,23 +315,44 @@ a {
 }
 
 .box {
+    animation: fadeIn 0.6s ease-out;
+    animation-fill-mode: both;
     background: white;
     margin: 8px;
-    padding: 16px;
+    padding: 15px;
     border-radius: 20px;
     border: 1.5px solid #d2eaff;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: 1fr;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    gap: 10px;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.box:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
 }
 
 .box h2 {
     grid-column: 1 / 3;
-    color: #173a64;
+    color: #0095DA;
     font-size: 22px;
-    margin: 0 0 5px 0;
+    margin: 0 0 3px 0;
+    position: relative;
+    display: inline-block;
+}
+
+.box h2:after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 2px;
+    background-color: #0095DA;
+    bottom: 0;
+    left: calc(50% - 20px);
+    border-radius: 1px;
 }
 
 .Timetable-item {

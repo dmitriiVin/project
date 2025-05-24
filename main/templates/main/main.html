@@ -10,6 +10,17 @@
     <title>Расписание занятости компьютерных классов на IT-этаже || МАИ</title>
   </head>
   <body>
+  <header class="header">
+    <div class="header-left">
+      <img src="{% static 'main/img/MAI-logo.svg' %}" class="mai-logo" />
+      <img src="{% static 'main/img/Header-left.svg' %}" class="kaf806" />
+    </div>
+
+    <div class="header-right">
+      <img src="{% static 'main/img/Header-right.svg' %}" class="mai" />
+    </div>
+  </header>
+
     {% if data.account_mod == 1 %}
       <div id="open-menu">
         <i class="fa-solid fa-circle-user"></i>
@@ -17,7 +28,7 @@
       <div id="menu">
         <div id="header-menu">
           <h2 id="h2-menu">Аккаунт преподавателя</h2>
-          <img src="{% static 'main/img/МАИ_лого.svg.png' %}" alt="МАИ">
+          <img src="{% static 'main/img/MAI-logo.svg' %}" alt="МАИ">
         </div>
         <div id="mainblock-menu">
           <p>Фамилия: {{ data.account.surname }}</p>
@@ -55,6 +66,7 @@
     <a href="{% url 'home_page' %}" id="go-to-welcome-page">
       <div>
         <i class="fa-solid fa-arrow-left"></i>
+        <span>Назад</span>
       </div>
     </a>
     

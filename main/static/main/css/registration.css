@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Segoe UI", sans-serif;
+  font-family: 'Montserrat', "Segoe UI", sans-serif;
   background: linear-gradient(180deg, #d8f1ff, #b5e3ff);
   min-height: 100vh;
   display: flex;
@@ -15,16 +15,37 @@ body {
   background: white;
   padding: 30px;
   width: 20vw;
+  min-width: 300px;
   border-radius: 20px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   text-align: center;
   margin-bottom: 20px;
+  animation: fadeIn 0.6s ease-out;
+  transition: all 0.3s ease;
+}
+
+.auth-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
 .auth-box h2 {
-  color: #173a64;
+  color: #0095DA;
   font-size: 22px;
   margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
+}
+
+.auth-box h2:after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 2px;
+  background-color: #0095DA;
+  bottom: -5px;
+  left: calc(50% - 20px);
+  border-radius: 1px;
 }
 
 input {
@@ -60,16 +81,18 @@ input:focus {
 
 .primary:hover {
   background-color: #4aa7f3;
+  transform: translateY(-1px);
 }
 
 .secondary {
   background-color: #f2f9ff;
-  color: #173a64;
+  color: #0095DA;
   border: 1.5px solid #d2eaff;
 }
 
 .secondary:hover {
   background-color: #e2f3ff;
+  transform: translateY(-1px);
 }
 
 form {
@@ -80,4 +103,9 @@ form input {
   display: block;
   margin: 0 auto;
   width: 90%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
