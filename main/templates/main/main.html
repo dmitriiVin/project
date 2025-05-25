@@ -20,7 +20,6 @@
       <img src="{% static 'main/img/Header-right.svg' %}" class="mai" />
     </div>
   </header>
-
     {% if data.account_mod == 1 %}
       <div id="open-menu">
         <i class="fa-solid fa-circle-user"></i>
@@ -66,13 +65,11 @@
     <a href="{% url 'home_page' %}" id="go-to-welcome-page">
       <div>
         <i class="fa-solid fa-arrow-left"></i>
-        <span>Назад</span>
       </div>
     </a>
     
     <main>
       {% with current_date=aditional_info.CurrentDateIndex %}
-    
         <div id="Timetable-header">
           <h1>Расписание</h1>
           <div class="week-marker">
@@ -142,9 +139,7 @@
                           </div>
                         {% endif %}
                         
-                        {% if data.account_mod == 1 %}
-                          <div id="dark-background"></div>
-                        {% endif %}
+
                         
                       </form>
                     

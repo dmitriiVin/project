@@ -109,9 +109,10 @@ def main(request):
         current_date_for_edit = request.POST.get("current_date_for_edit")
         group_for_add = request.POST.get("group_for_add")
         
-        if len(group_for_add) > 16:
-            return redirect(f"{request.path}?current_date_index_from_form={current_date_for_edit}")
-                        
+        if group_for_add:
+            if len(group_for_add) > 16:
+                return redirect(f"{request.path}?current_date_index_from_form={current_date_for_edit}")
+        
         if IT_date_time:
             IT, date, time = IT_date_time.split("|")
             time_slot_name = "GroupIn" + time.replace(":", "").replace("-", "_") # Имя столбца на определенное время
