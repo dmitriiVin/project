@@ -96,7 +96,7 @@ docker compose up --build
 > 🎯 **Дорожная карта:** PostgreSQL → Синхрон с Google Calendar → релиз для кафедры.
 
 ---
-![QR](./reamde_adds/qr.png) 
+![QR Code](./readme_adds/qr.png)
 
 ## 📬 Обратная связь
 
