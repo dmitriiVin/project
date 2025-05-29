@@ -27,6 +27,7 @@ class IT_db_base(models.Model):
     GroupIn1300_1430 = models.CharField("Группа на 13.00-14.30", max_length=16, blank=True, default="")
     GroupIn1445_1615 = models.CharField("Группа на 14.45-16.15", max_length=16, blank=True, default="")
     GroupIn1630_1800 = models.CharField("Группа на 16.30-18.00", max_length=16, blank=True, default="")
+    GroupIn1800_1930 = models.CharField("Группа на 18.00-19.30", max_length=16, blank=True, default="")
     
     def clean(self):
         now = datetime.today().date()
@@ -70,17 +71,28 @@ class IT3_db(IT_db_base):
 
 
 
+class IT4_db(IT_db_base):
+    def __str__(self):
+        return f"IT-3 ({str(self.Date)})"
+    
+    class Meta():
+        verbose_name = "Группа в IT-4"
+        verbose_name_plural = "Группы в IT-4"
+
+
+
 class Audiences(models.Model):
     IT1 = models.ForeignKey(IT1_db, on_delete=models.CASCADE, null=True, blank=True)
     IT2 = models.ForeignKey(IT2_db, on_delete=models.CASCADE, null=True, blank=True)
     IT3 = models.ForeignKey(IT3_db, on_delete=models.CASCADE, null=True, blank=True)
+    IT4 = models.ForeignKey(IT4_db, on_delete=models.CASCADE, null=True, blank=True)
     
     def __str__(self):
         return f"Расписание на дату: {self.IT1.Date}"
     
     def clean(self):
         dates = []
-        for i in [self.IT1, self.IT2, self.IT3]:
+        for i in [self.IT1, self.IT2, self.IT3, self.IT4]:
             if i:
                 dates.append(i.Date)
         

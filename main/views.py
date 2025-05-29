@@ -7,7 +7,8 @@ from django.contrib.auth.hashers import check_password, make_password
 seats_quantity = {
     "IT1": 11,
     "IT2": 22,
-    "IT3": 33
+    "IT3": 33,
+    "IT4": 44
 }
 
 
@@ -51,7 +52,7 @@ def register(request):
         "audience_list": audience_list,
         "aditional_info": {
             "CurrentDateIndex": current_date,
-            "AudienceName": ["IT1", "IT2", "IT3"],
+            "AudienceName": ["IT1", "IT2", "IT3", "IT4"],
             "SeatsQuantity": seats_quantity,
             "AllLessonTimings": [
                 ["GroupIn900_1030", "9:00-10:30"],
@@ -59,6 +60,7 @@ def register(request):
                 ["GroupIn1300_1430", "13:00-14:30"],
                 ["GroupIn1445_1615", "14:45-16:15"],
                 ["GroupIn1630_1800", "16:30-18:00"],
+                ["GroupIn1800_1930", "18:00-19:30"]
             ]
         }
     })
@@ -72,7 +74,7 @@ def main(request):
     audience_list = Audiences.objects.all()
     current_date = 0
     aditional_info = {
-        "AudienceName": ["IT-1", "IT-2", "IT-3"]
+        "AudienceName": ["IT-1", "IT-2", "IT-3", "IT4"]
     }
     
     # Сработает, если quit был отправлен (запрос на выход из аккаунта)
@@ -91,7 +93,7 @@ def main(request):
         "data": data,
         "audience_list": audience_list,
         "aditional_info": {
-            "AudienceName": ["IT1", "IT2", "IT3"],
+            "AudienceName": ["IT1", "IT2", "IT3", "IT4"],
             "SeatsQuantity": seats_quantity,
             "CurrentDateIndex": current_date,
             "AllLessonTimings": [
@@ -100,6 +102,7 @@ def main(request):
                 ["GroupIn1300_1430", "13:00-14:30"],
                 ["GroupIn1445_1615", "14:45-16:15"],
                 ["GroupIn1630_1800", "16:30-18:00"],
+                ["GroupIn1800_1930", "18:00-19:30"]
             ]
         }
     }
@@ -119,6 +122,9 @@ def main(request):
             audience = Audiences.objects.filter(
                 **{f"{IT}__Date": date}
             ).first()
+            
+            for i in Audiences.objects.all():
+                print(i.IT4.Date)
             
             it = getattr(audience, IT)
             setattr(it, time_slot_name, group_for_add)

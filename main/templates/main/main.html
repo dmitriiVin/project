@@ -112,6 +112,7 @@
                     {% with group=IT|get_attr:i.0 %}
                     
                       <form action="{% url 'main_page' %}" method="POST" class="edit-group-info">
+                      
                         {% csrf_token %}
                         <input type="hidden" name="current_date_for_edit" value="{{ current_date }}">
                         
@@ -138,8 +139,6 @@
                             </div>
                           </div>
                         {% endif %}
-                        
-
                         
                       </form>
                     
