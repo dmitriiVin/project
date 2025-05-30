@@ -61,8 +61,6 @@ python manage.py runserver          # → http://localhost:8000
 docker compose up --build
 ```
 
-> ⚙️  Секреты (`GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`) — в файле `.env`  
-> (пример — `.env.example`).
 
 ---
 
