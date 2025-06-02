@@ -42,7 +42,10 @@
 | **Backend** | Python 3.13, Django 4.x, Django REST Framework |
 | **Frontend** | HTML5, CSS3 (SCSS) |
 | **База данных** | SQLite (dev) → PostgreSQL (prod) |
-| **Интеграции** | Google Spreadsheet (не получилось) |
+| **DevOps** | GitHub Actions (pytest + flake8) |
+| **Интеграции** | Google Spreadsheet |
+| **Тестирование** | PyTest |
+
 ---
 
 ## 🛠️ Быстрый старт
@@ -61,6 +64,8 @@ python manage.py runserver          # → http://localhost:8000
 docker compose up --build
 ```
 
+> ⚙️  Секреты (`GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`) — в файле `.env`  
+> (пример — `.env.example`).
 
 ---
 
@@ -85,16 +90,15 @@ docker compose up --build
 | 7 апреля | `0f0a2de` | SQL-проверка конфликтов | **Геннадий** |
 | 12 апреля | `responsive-styles` | Полный mobile-first + dark-mode beta | **Александр** |
 | 18 апреля | `5b1a88e` | Импорт CSV/XLSX + unit-тесты | **Геннадий** |
-| 23 апреля | `google-sync` | OAuth-sync с Google Calendar | **Геннадий + ревью Александр** (безуспешно) |
+| 23 апреля | `google-sync-draft` | OAuth-sync с Google Calendar | **Геннадий + ревью Александр** |
 | 25 апреля | `a77c4f8` | Финальный UI-polish: цвет, tooltip’ы | **Александр** |
 | 30 апреля | `c2e514b` | Docker-compose, GitHub Actions | **Геннадий** |
 | 5 мая | `fa9d0e0` | Merge-party, README 2.0 | **Оба** |
 | 15 мая | `1f3b7cc` | Lighthouse 95 +, баг-фиксы | **Александр** |
 
-> 🎯 **Дорожная карта:** PostgreSQL → Синхрон с Google Calendar → релиз для кафедры.
+> 🎯 **Дорожная карта:** PostgreSQL → PWA → релиз для кафедры.
 
 ---
-![QR Code](./readme_adds/qr2.png)
 
 ## 📬 Обратная связь
 

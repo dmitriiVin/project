@@ -1,14 +1,13 @@
 from django.shortcuts import render, redirect
 from .models import Accounts, Audiences
-from django.contrib.auth.hashers import check_password, make_password
 
 
 # Количество посадочных мест в аудиториях
 seats_quantity = {
-    "IT1": 11,
-    "IT2": 22,
-    "IT3": 33,
-    "IT4": 44
+    "IT5": 80,
+    "IT11": 25,
+    "IT15": 28,
+    "IT17": 22
 }
 
 
@@ -25,45 +24,32 @@ def home(request):
 
 def register(request):
     error = 0
-    account = {
-        "name": request.POST.get("name"),
-        "surname": request.POST.get("surname"),
-        "lastname": request.POST.get("lastname"),
-        "department": request.POST.get("department"),
-        "password": request.POST.get("password")
-    }
+    requested_login = request.POST.get("login")
+    requested_password = request.POST.get("password")
+    account = Accounts.objects.filter(login=requested_login).first()
     
-    for i in Accounts.objects.all():
-        if (i.name == account["name"]) and (i.surname == account["surname"]) and (i.lastname == account["lastname"]) and (i.department == account["department"]):
-            if check_password(account["password"], make_password(i.password)):
-                request.session["account"] = account
+    if account:
+        account_dict = {
+            "name": account.name,
+            "surname": account.surname,
+            "lastname": account.lastname,
+            "department": account.department,
+            "login": account.login,
+            "password": account.password
+        }
+    
+        if requested_login and requested_password:
+            if account.password == requested_password:
+                request.session["account"] = account_dict
                 request.session["account_mod"] = 1
                 return redirect("main_page")
             else:
                 error = 1
-                break
     
     audience_list = Audiences.objects.all()
     current_date = 0
     
-    return render(request, "main/registration.html", {
-        "account": account,
-        "error": error,
-        "audience_list": audience_list,
-        "aditional_info": {
-            "CurrentDateIndex": current_date,
-            "AudienceName": ["IT1", "IT2", "IT3", "IT4"],
-            "SeatsQuantity": seats_quantity,
-            "AllLessonTimings": [
-                ["GroupIn900_1030", "9:00-10:30"],
-                ["GroupIn1045_1215", "10:45-12:15"],
-                ["GroupIn1300_1430", "13:00-14:30"],
-                ["GroupIn1445_1615", "14:45-16:15"],
-                ["GroupIn1630_1800", "16:30-18:00"],
-                ["GroupIn1800_1930", "18:00-19:30"]
-            ]
-        }
-    })
+    return render(request, "main/registration.html", {"error": error})
 
 
 
@@ -74,7 +60,7 @@ def main(request):
     audience_list = Audiences.objects.all()
     current_date = 0
     aditional_info = {
-        "AudienceName": ["IT-1", "IT-2", "IT-3", "IT4"]
+        "AudienceName": ["IT-5", "IT-11", "IT-15", "IT-17"]
     }
     
     # Сработает, если quit был отправлен (запрос на выход из аккаунта)
@@ -89,11 +75,14 @@ def main(request):
     if new_current_date and new_current_date != "None":
         current_date = int(new_current_date)
     
+    if data["account_mod"] == 1:
+        data["account"] = request.session.get("account")
+    
     DataToFrontend = {
         "data": data,
         "audience_list": audience_list,
         "aditional_info": {
-            "AudienceName": ["IT1", "IT2", "IT3", "IT4"],
+            "AudienceName": ["IT5", "IT11", "IT15", "IT17"],
             "SeatsQuantity": seats_quantity,
             "CurrentDateIndex": current_date,
             "AllLessonTimings": [
@@ -102,7 +91,7 @@ def main(request):
                 ["GroupIn1300_1430", "13:00-14:30"],
                 ["GroupIn1445_1615", "14:45-16:15"],
                 ["GroupIn1630_1800", "16:30-18:00"],
-                ["GroupIn1800_1930", "18:00-19:30"]
+                ["GroupIn1815_1945", "18:15-19:45"]
             ]
         }
     }
@@ -111,6 +100,7 @@ def main(request):
         IT_date_time = request.POST.get("IT_date_time")
         current_date_for_edit = request.POST.get("current_date_for_edit")
         group_for_add = request.POST.get("group_for_add")
+        owner_login = request.POST.get("owner_login")
         
         if group_for_add:
             if len(group_for_add) > 16:
@@ -123,11 +113,9 @@ def main(request):
                 **{f"{IT}__Date": date}
             ).first()
             
-            for i in Audiences.objects.all():
-                print(i.IT4.Date)
-            
             it = getattr(audience, IT)
             setattr(it, time_slot_name, group_for_add)
+            setattr(it, f"OWNER_{time_slot_name}", owner_login)
             it.save()
             
             return redirect(f"{request.path}?current_date_index_from_form={current_date_for_edit}")
@@ -153,17 +141,13 @@ def main(request):
                 account.password = new_password
                 account.save()
                 data["account"]["password"] = new_password
-                
+                print(DataToFrontend)
                 return render(request, "main/main.html", DataToFrontend)
             
             else:
                 request.session["error"] = 1
             
             return redirect(f"{request.path}?current_date_index_from_form={current_date_for_edit}#change-password")
-    
-    
-    if data["account_mod"] == 1:
-        data["account"] = request.session.get("account")
     
     # Добавляем error в DataToFrontend
     DataToFrontend["error"] = error

@@ -10,16 +10,17 @@
     <title>Расписание занятости компьютерных классов на IT-этаже || МАИ</title>
   </head>
   <body>
-  <header class="header">
-    <div class="header-left">
-      <img src="{% static 'main/img/MAI-logo.svg' %}" class="mai-logo" />
-      <img src="{% static 'main/img/Header-left.svg' %}" class="kaf806" />
-    </div>
-
-    <div class="header-right">
-      <img src="{% static 'main/img/Header-right.svg' %}" class="mai" />
-    </div>
-  </header>
+    <header class="header">
+      <div class="header-left">
+        <img src="{% static 'main/img/MAI-logo.svg' %}" class="mai-logo" />
+        <img src="{% static 'main/img/Header-left.svg' %}" class="kaf806" />
+      </div>
+      
+      <div class="header-right">
+        <img src="{% static 'main/img/Header-right.svg' %}" class="mai" />
+      </div>
+    </header>
+    
     {% if data.account_mod == 1 %}
       <div id="open-menu">
         <i class="fa-solid fa-circle-user"></i>
@@ -34,6 +35,7 @@
           <p>Имя: {{ data.account.name }}</p>
           <p>Отчество: {{ data.account.lastname }}</p>
           <p>Кафедра: {{ data.account.department }}</p>
+          <p>Логин: {{ data.account.login }}</p>
           <button type="submit">
             <a href="#change-password">Изменить пароль</a>
           </button>
@@ -43,6 +45,7 @@
           </form>
         </div>
       </div>
+      
       <div id="change-password">
         <form action="{% url 'main_page' %}" method="POST">
           {% csrf_token %}
@@ -107,41 +110,54 @@
               
               {% with el=audience_list|get_element_from_list:current_date %}
                 {% with IT=el|get_attr:name %}
-                
+                  
                   {% for i in aditional_info.AllLessonTimings %}
                     {% with group=IT|get_attr:i.0 %}
-                    
-                      <form action="{% url 'main_page' %}" method="POST" class="edit-group-info">
                       
+                      <form action="{% url 'main_page' %}" method="POST" class="edit-group-info">
                         {% csrf_token %}
                         <input type="hidden" name="current_date_for_edit" value="{{ current_date }}">
                         
-                        <div class="Timetable-item {{ group|free_or_booked }}" tabindex="0">
-                          {% if group %}
-                            <p>{{ group }}</p>
-                          {% else %}
-                            <p>Свободно</p>
-                          {% endif %}
-                          <p>{{ i.1 }}</p>
-                        </div>
-                        {% if data.account_mod == 1 %}
-                          <div class="edit-window-for-teacher" tabindex="0">
-                            <p>{{invalid_group_name}}</p>
-                            <h4>{{ name }}</h4>
-                            <div id="input-data">
-                              <input type="text" name="group_for_add" placeholder="Введите номер группы" required>
-                              <button type="submit">✓</button>
-                              <input type="hidden" name="IT_date_time" value="{{name}}|{{el|date_converter}}|{{i.1}}" >
-                            </div>
-                            <div id="date-time-div">
-                              <h5>{{ audience_list|get_date_from_current_date:aditional_info.CurrentDateIndex }}</h5>
-                              <h6>{{ i.1 }}</h6>
-                            </div>
+                        {% with date_auditory=current_date|concatenate:name %}
+                        
+                          <div
+                            class="Timetable-item {{ group|free_or_booked }}"
+                            {% if group|free_or_booked == "free" or data.account.login == i.0|get_teacher_login:date_auditory %}
+                              tabindex="0"
+                            {% endif %}
+                            >
+                            
+                            {% if group %}
+                              <p>{{ group }}</p>
+                              <p>{{ i.0|get_teacher_FIO:date_auditory }}</p>
+                            {% else %}
+                              <p>Свободно</p>
+                            {% endif %}
+                            <p>{{ i.1 }}</p>
+                            
                           </div>
-                        {% endif %}
+                          
+                          {% if data.account_mod == 1 %}
+                            <div class="edit-window-for-teacher" tabindex="0">
+                              <p>{{ invalid_group_name }}</p>
+                              <h4>{{ name }}</h4>
+                              <div id="input-data">
+                                <input type="text" name="group_for_add" placeholder="Введите номер группы" required>
+                                <button type="submit">✓</button>
+                                <input type="hidden" name="IT_date_time" value="{{name}}|{{el|date_converter}}|{{i.1}}">
+                                <input type="hidden" name="owner_login" value="{{data.account.login}}">
+                              </div>
+                              <div id="date-time-div">
+                                <h5>{{ audience_list|get_date_from_current_date:aditional_info.CurrentDateIndex }}</h5>
+                                <h6>{{ i.1 }}</h6>
+                              </div>
+                            </div>
+                          {% endif %}
+                        
+                        {% endwith %}
                         
                       </form>
-                    
+                      
                     {% endwith %}
                   {% endfor %}
                   

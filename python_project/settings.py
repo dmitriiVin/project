@@ -128,6 +128,6 @@ CELERY_TIMEZONE = 'Europe/Moscow'
 CELERY_BEAT_SCHEDULE = {
     "delete-old-data": {
         "task": "main.tasks.delete_old_data",
-        "schedule": 86400  # сутки в секундах
+        "schedule": 86400  # сутки в секундах: 86400
     }
 }
