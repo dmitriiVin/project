@@ -121,8 +121,8 @@ SESSION_COOKIE_AGE = 7200  # 2 часа в секундах
 SESSION_SAVE_EVERY_REQUEST = True  # Обновлять срок жизни при каждом запросе
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Сессия сохраняется после закрытия браузера
 
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = None
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
 CELERY_TIMEZONE = 'Europe/Moscow'
 
 CELERY_BEAT_SCHEDULE = {

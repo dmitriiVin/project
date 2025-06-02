@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+    command: python manage.py runserver 0.0.0.0:8000
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  celery:
+    build: .
+    depends_on:
+      - redis
+    command: celery -A python_project worker --loglevel=info
+
+  celery-beat:
+    build: .
+    depends_on:
+      - redis
+    command: celery -A python_project beat --loglevel=info
+    volumes:
+      - celerybeat-data:/app/celerybeat-schedule.db
+
+volumes:
+  celerybeat-data: 
